@@ -1,6 +1,5 @@
 package com.some.blue;
 
-import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -8,7 +7,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +28,6 @@ public class BlueBroadcastReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (action.equals(BluetoothDevice.ACTION_FOUND)) {
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
             devices.add(device);
         }
 
@@ -45,7 +42,7 @@ public class BlueBroadcastReceiver extends BroadcastReceiver {
         filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
         filter.addAction(BluetoothDevice.ACTION_CLASS_CHANGED);
         filter.addAction(BluetoothDevice.ACTION_NAME_CHANGED);
-        filter.addAction(BluetoothDevice.ACTION_UUID);
+        //filter.addAction(BluetoothDevice.ACTION_UUID);
         return filter;
     }
 
@@ -57,13 +54,14 @@ public class BlueBroadcastReceiver extends BroadcastReceiver {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private class ConnectThread extends Thread {
 
         private final UUID MY_UUID = UUID.randomUUID();
         private final BluetoothDevice _device;
         private final BluetoothSocket _socket;
         private final BluetoothAdapter _adapter;
+        private InputStream _inputStream;
+        private OutputStream _outputStream;
 
         public ConnectThread(BluetoothDevice device, BluetoothAdapter adapter) {
 
@@ -108,6 +106,23 @@ public class BlueBroadcastReceiver extends BroadcastReceiver {
                 tmpOut = socket.getOutputStream();
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+            _inputStream = tmpIn;
+            _outputStream = tmpOut;
+
+        }
+
+        private void read() {
+            byte[] buffer = new byte[1024];
+            int bytes;
+
+            while (true) {
+                try {
+                    bytes = _inputStream.read(buffer);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    break;
+                }
             }
 
         }
