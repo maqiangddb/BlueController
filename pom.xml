@@ -7,14 +7,7 @@
     <packaging>apk</packaging>
     <name>BlueController</name>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <version>2.3.3</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+
     <build>
         <finalName>${project.artifactId}</finalName>
         <sourceDirectory>src</sourceDirectory>
@@ -38,6 +31,12 @@
                         <path>${env.ANDROID_HOME}</path>
                         <platform>10</platform>
                     </sdk>
+                    <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
+                    <resourceDirectory>${project.basedir}/res</resourceDirectory>
+                    <assetsDirectory>${project.basedir}/assets</assetsDirectory>
+                    <nativeLibrariesDirectory>${project.basedir}/native</nativeLibrariesDirectory>
+                    <resourceOverlayDirectory>${project.basedir}/overlay</resourceOverlayDirectory>
+                    <extractDuplicates>true</extractDuplicates>
                 </configuration>
             </plugin>
             <plugin>
@@ -46,4 +45,12 @@
             </plugin>
         </plugins>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android</artifactId>
+            <version>2.3.3</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
