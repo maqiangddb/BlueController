@@ -8,6 +8,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
@@ -26,12 +27,20 @@ public class MainActivity extends Activity implements SensorEventListener
     SensorManager sensorManager;
 
     TextView acc_data;
+    Button acc_stop;
+    Button acc_start;
     TextView gra_data;
+    Button gra_stop;
+    Button gra_start;
     TextView gyro_data;
+    Button gyro_stop;
+    Button gyro_start;
     TextView light_data;
+    Button light_stop;
+    Button light_start;
     TextView mag_data;
-    Button stop;
-    Button start;
+    Button mag_stop;
+    Button mag_start;
 
 
     /** Called when the activity is first created. */
@@ -73,25 +82,35 @@ public class MainActivity extends Activity implements SensorEventListener
     }
 
     private void initUI() {
+
         acc_data = (TextView) findViewById(R.id.acc_data);
+        bindButtonUI(acc_stop, acc_start, Sensor.TYPE_LINEAR_ACCELERATION);
         gra_data = (TextView) findViewById(R.id.gra_data);
+        bindButtonUI(gra_stop, gra_start, Sensor.TYPE_GRAVITY);
         gyro_data = (TextView) findViewById(R.id.gyro_data);
+        bindButtonUI(gyro_stop, gyro_start, Sensor.TYPE_GYROSCOPE);
         light_data = (TextView) findViewById(R.id.light_data);
+        bindButtonUI(light_stop, light_start, Sensor.TYPE_LIGHT);
         mag_data = (TextView) findViewById(R.id.mag_data);
-        stop = (Button) findViewById(R.id.stop);
+        bindButtonUI(mag_stop, mag_start, Sensor.TYPE_MAGNETIC_FIELD);
+
+    }
+
+    private void bindButtonUI (Button stop, Button start, final int type) {
+
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sensorManager.unregisterListener(MainActivity.this);
+                sensorManager.unregisterListener((SensorListener) MainActivity.this, type);
             }
         });
-        start = (Button) findViewById(R.id.start);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                sensorManager.registerListener((SensorListener) MainActivity.this, type);
             }
         });
+
     }
 
     @Override
@@ -147,7 +166,9 @@ public class MainActivity extends Activity implements SensorEventListener
             sb.append(v);
             sb.append(",");
         }
-        sb.append("]");
+        sb.append("]\n");
+        DistanceKeeper keeper = new DistanceKeeper();
+        keeper.accelerateToDistance(event.values[0], event.values[1], event.values[2]);
         return sb;
     }
 

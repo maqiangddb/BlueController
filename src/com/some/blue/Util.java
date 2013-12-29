@@ -12,4 +12,5 @@ public class Util {
     public static void LOGI(String msg) {
         Log.i(TAG, msg);
     }
+
 }

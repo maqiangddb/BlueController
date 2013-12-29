@@ -11,7 +11,8 @@
     android:text="Hello World, MainActivity"
     android:visibility="gone"
     />
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -19,70 +20,138 @@
             android:id="@+id/acc_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
         <TextView
             android:id="@+id/acc_data"
-            android:layout_below="@+id/acc_title"
+            android:singleLine="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/acc_stop"
+                android:text="Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/acc_start"
+                android:text="Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:text="Gravity"
             android:id="@+id/gra_title"
-            android:layout_below="@+id/acc_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/gra_data"
-            android:layout_below="@+id/gra_title"
+            android:singleLine="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/gra_stop"
+                android:text="Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/gra_start"
+                android:text="Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:text="Gyroscope"
             android:id="@+id/gyro_title"
-            android:layout_below="@+id/gra_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/gyro_data"
-            android:layout_below="@+id/gyro_title"
+            android:singleLine="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/gyro_stop"
+                android:text="Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/gyro_start"
+                android:text="Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/light_title"
             android:text="Light"
-            android:layout_below="@id/gyro_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/light_data"
-            android:layout_below="@+id/light_title"
+            android:singleLine="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/light_stop"
+                android:text="Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/light_start"
+                android:text="Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:text="Magnetic"
             android:id="@+id/mag_title"
-            android:layout_below="@id/light_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/mag_data"
-            android:layout_below="@id/mag_title"
+            android:singleLine="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        </RelativeLayout>
-    <Button
-        android:id="@+id/stop"
-        android:text="Stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/start"
-        android:text="Start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/mag_stop"
+                android:text="Stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/mag_start"
+                android:text="Start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+
 </LinearLayout>
 
