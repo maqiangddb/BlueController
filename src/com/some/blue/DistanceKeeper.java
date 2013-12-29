@@ -39,4 +39,12 @@ public class DistanceKeeper {
         System.out.printf("%f, %f, %f\n", ret[0], ret[1], ret[2]);
         return ret;
     }
+
+    public double[] accelerateToDistance(float a[]) {
+        return this.accelerateToDistance(a[0], a[1], a[2]);
+    }
+    
+    public double[] accelerateToDistance(double a[]) {
+        return this.accelerateToDistance(a[0], a[1], a[2]);
+    }
 }
