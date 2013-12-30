@@ -8,7 +8,6 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
@@ -41,6 +40,10 @@ public class MainActivity extends Activity implements SensorEventListener
     TextView mag_data;
     Button mag_stop;
     Button mag_start;
+
+    double s_x;
+    double s_y;
+    double s_z;
 
 
     /** Called when the activity is first created. */
@@ -84,14 +87,24 @@ public class MainActivity extends Activity implements SensorEventListener
     private void initUI() {
 
         acc_data = (TextView) findViewById(R.id.acc_data);
+        acc_stop = (Button) findViewById(R.id.acc_stop);
+        acc_start = (Button) findViewById(R.id.acc_start);
         bindButtonUI(acc_stop, acc_start, Sensor.TYPE_LINEAR_ACCELERATION);
         gra_data = (TextView) findViewById(R.id.gra_data);
+        gra_stop = (Button) findViewById(R.id.gra_start);
+        gra_start = (Button) findViewById(R.id.gra_start);
         bindButtonUI(gra_stop, gra_start, Sensor.TYPE_GRAVITY);
         gyro_data = (TextView) findViewById(R.id.gyro_data);
+        gyro_stop = (Button) findViewById(R.id.gyro_stop);
+        gyro_start = (Button) findViewById(R.id.gyro_start);
         bindButtonUI(gyro_stop, gyro_start, Sensor.TYPE_GYROSCOPE);
         light_data = (TextView) findViewById(R.id.light_data);
+        light_stop = (Button) findViewById(R.id.light_stop);
+        light_start = (Button) findViewById(R.id.light_start);
         bindButtonUI(light_stop, light_start, Sensor.TYPE_LIGHT);
         mag_data = (TextView) findViewById(R.id.mag_data);
+        mag_stop = (Button) findViewById(R.id.mag_stop);
+        mag_start = (Button) findViewById(R.id.mag_start);
         bindButtonUI(mag_stop, mag_start, Sensor.TYPE_MAGNETIC_FIELD);
 
     }
@@ -101,13 +114,13 @@ public class MainActivity extends Activity implements SensorEventListener
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sensorManager.unregisterListener((SensorListener) MainActivity.this, type);
+                sensorManager.unregisterListener(MainActivity.this, sensorManager.getDefaultSensor(type));
             }
         });
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sensorManager.registerListener((SensorListener) MainActivity.this, type);
+                sensorManager.registerListener(MainActivity.this, sensorManager.getDefaultSensor(type), SensorManager.SENSOR_DELAY_UI);
             }
         });
 
@@ -158,8 +171,8 @@ public class MainActivity extends Activity implements SensorEventListener
     }
 
     private StringBuilder debugData(int size, StringBuilder sb, SensorEvent event) {
-        sb.append("data size:");
-        sb.append(size);
+        //sb.append("data size:");
+        //sb.append(size);
         sb.append("[");
         for (int i=0;i<size;i++) {
             float v = event.values[i];
@@ -168,7 +181,18 @@ public class MainActivity extends Activity implements SensorEventListener
         }
         sb.append("]\n");
         DistanceKeeper keeper = new DistanceKeeper();
-        keeper.accelerateToDistance(event.values[0], event.values[1], event.values[2]);
+        double[] d_values = keeper.accelerateToDistance(event.values);
+        s_x += d_values[0];
+        s_y += d_values[1];
+        s_z += d_values[2];
+        double[] all_values = {s_x, s_y, s_z};
+        sb.append("[");
+        for (int i=0;i<d_values.length;i++) {
+            double v = d_values[i];
+            double v1 = all_values[i];
+            sb.append(String.format("%f", v1));
+        }
+        sb.append("]");
         return sb;
     }
 
